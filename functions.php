@@ -6,7 +6,7 @@ function connect_to_db()
     $user = 'root';
     $pwd = '';
 
-    // $dbn = 'mysql:dbname=16b426a124320a52a286b09f2c32fbf0;charset=utf8;port=3306;host=mysql-2.mc.lolipop.lan';
+    // $dbn = '';
     // $user = '';
     // $pwd = '';
 
