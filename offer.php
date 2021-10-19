@@ -5,15 +5,10 @@ check_session_id();
 $pdo = connect_to_db();
 $user_id = $_SESSION['user_id'];
 
-// var_dump($user_id);
-// exit();
 $sql = 'SELECT * FROM item_table WHERE owner_id = :id AND is_status = 1';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
 $status = $stmt->execute();
-
-// var_dump($user_id);
-// exit();
 
 if ($status == false) {
     $error = $stmt->errorInfo();
@@ -29,14 +24,17 @@ if ($status == false) {
         $tradeitem_result = "";
 
         foreach ($result as $record) {
+            $my_result .= "<div class='size'>";
             $my_result .= " <fieldset>";
             $my_result .= "<legend>自分の出品商品 詳細</legend>";
-            $my_result .= "<a href='trade_request.php?item_id={$record["id"]}'><img src='{$record["item_image"]}' width=300px class=img></a>";
-            $my_result .= "<div>商品名:{$record["item_name"]}</div>";
-            $my_result .= "<div>メーカー:{$record["brand_name"]}</div>";
-            $my_result .= "<div>サイズ:{$record["size"]}</div>";
+            $my_result .= "<div style='width: 300px;'><img src='{$record["item_image"]}' width=300px></div>";
+
+            $my_result .= "<div style='width: 300px;'>{$record["brand_name"]}</div>";
+            $my_result .= "<div style='width: 300px;'>{$record["item_name"]}</div>";
+            $my_result .= "<div style='width: 300px;'>{$record["size"]}</div>";
             $my_result .= " </fieldset><br>";
-            $my_result .= "↑↓";
+            $my_result .= "</div>";
+            $my_result .= "<div style='text-align:center; font-size:20px;'>↑↓</div><br>";
 
 
             $sql = 'SELECT * FROM item_table WHERE id = :treaditem_id';
@@ -50,71 +48,106 @@ if ($status == false) {
             } else {
                 $treaded_item = $stmt->fetch(PDO::FETCH_ASSOC);
             }
-            $my_result .= "<fieldset>";
+            $my_result .= "<div class='size'>";
+            $my_result .= " <fieldset>";
             $my_result .= "<legend>相手の出品商品 詳細</legend>";
-            $my_result .= "<img src='{$treaded_item["item_image"]}'width='300px'>";
-            $my_result .= "<div>商品名 {$treaded_item["item_name"]}</div>";
-            $my_result .= "<div>メーカー{$treaded_item["brand_name"]}</div>";
-            $my_result .= "<div>サイズ{$treaded_item["size"]}</div>";
-            $my_result .= " </fieldset>";
+            $my_result .= "<div style='width: 300px;'><img src='{$treaded_item["item_image"]}' width=300px></div>";
+            $my_result .= "<div style='width: 300px;'>{$treaded_item["brand_name"]}</div>";
+            $my_result .= "<div style='width: 300px;'>{$treaded_item["item_name"]}</div>";
+            $my_result .= "<div style='width: 300px;'>{$treaded_item["size"]}</div>";
+            $my_result .= " </fieldset><br>";
+            $my_result .= "</div>";
         }
         unset($value);
-
-        // var_dump($result);
-        // exit();
-        // var_dump($result[1]);
-        // exit();
-
-        // var_dump($treaditem_id);
-        // exit();
-
-        // $sql = 'SELECT * FROM item_table WHERE treaditem_id  = :treaditem_id AND is_status = 2';
-        // $stmt = $pdo->prepare($sql);
-        // $stmt->bindValue(':treaditem_id', $treaditem_id, PDO::PARAM_INT);
-        // $status = $stmt->execute();
-
-
-        // if ($status == false) {
-        //     $error = $stmt->errorInfo();
-        //     echo json_encode(["error_msg" => "{$error[2]}"]);
-        //     exit();
-        // } else {
-        //     $result = $stmt->fetchALL(PDO::FETCH_ASSOC);
-        //     $tradeitem_result = "";
-        //     foreach ($result as $record) {
-        //         $tradeitem_result .= "<fieldset>";
-        //         $tradeitem_result .= "<legend>相手の出品商品 詳細</legend>";
-        //         $tradeitem_result .= "<img src='{$record["item_image"]}'width='300px'>";
-        //         $tradeitem_result .= "<div>商品名 {$record["item_name"]}</div>";
-        //         $tradeitem_result .= "<div>メーカー{$record["brand_name"]}</div>";
-        //         $tradeitem_result .= "<div>サイズ{$record["size"]}</div>";
-        //         $tradeitem_result .= " </fieldset>";
-        //     }
-        //     unset($value);
-        // }
     } else {
 
 
         $my_result = "オファーがありません";
     }
 }
+$sql = 'SELECT * FROM item_table WHERE owner_id = :id AND is_status = 2';
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
+$status = $stmt->execute();
+
+if ($status == false) {
+    $error = $stmt->errorInfo();
+    echo json_encode(["error_msg" => "{$error[2]}"]);
+    exit();
+} else {
+
+    $result = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    if ($result) {
+
+
+        // $my_result = "";
+        // $tradeitem_result = "";
+
+        $offer_send = "";
+        $offer_post = "";
+
+        foreach ($result as $record) {
+            $offer_send .= "<div class='size'>";
+            $offer_send .= " <fieldset>";
+            $offer_send .= "<legend>自分の出品商品 詳細</legend>";
+            $offer_send .= "<div style='width: 300px;'><img src='{$record["item_image"]}' width=300px></div>";
+            $offer_send .= "<div style='width: 300px;'>{$record["brand_name"]}</div>";
+            $offer_send .= "<div style='width: 300px;'>{$record["item_name"]}</div>";
+            $offer_send .= "<div style='width: 300px;'>{$record["size"]}</div>";
+            $offer_send .= " </fieldset><br>";
+            $offer_send .= "</div>";
+            $offer_send .= "<div style='text-align:center; font-size:20px;'>↑↓</div><br>";
 
 
 
+            $sql = 'SELECT * FROM item_table WHERE id = :treaditem_id';
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':treaditem_id', $record['treaditem_id'], PDO::PARAM_INT);
+            $status = $stmt->execute();
+            if ($status == false) {
+                $error = $stmt->errorInfo();
+                echo json_encode(["error_msg" => "{$error[2]}"]);
+                exit();
+            } else {
+                $treaded_item = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+
+            // $offer_send .= "<form id='fm'>";
+            $offer_send .= "<div class='size'>";
+            $offer_send .= "<form action='item_yes.php' method='POST'>";
+            $offer_send .= "<fieldset>";
+            $offer_send .= "<legend>相手の出品商品 詳細</legend>";
+            $offer_send .= "<img src='{$treaded_item["item_image"]}' width='300px' >";
+            $offer_send .= "<input type='hidden' name='user_id' value='{$treaded_item["id"]} '>";
+            $offer_send .= "<input type='hidden' name='treaditem_id' value='{$treaded_item["treaditem_id"]} '>";
+            $offer_send .= "<div>{$treaded_item["id"]} </div>";
+            $offer_send .= "<div> 商品名 {$treaded_item["item_name"]} </div>";
+            $offer_send .= "<div> メーカー {$treaded_item["brand_name"]} </div>";
+            $offer_send .= "<div> サイズ {$treaded_item["size"]} </div>";
+            $offer_send .= "<input type='submit' value='承諾'>";
+            $offer_send .= "</form>";
+            $offer_send .= "<form action='item_no.php' method='POST'>";
+            $offer_send .= "<input type='hidden' name='user_id' value='{$treaded_item["id"]} '>";
+            $offer_send .= "<input type='hidden' name='treaditem_id' value='{$treaded_item["treaditem_id"]} '>";
+            $offer_send .= "<input type='submit' value='拒否'>";
+            $offer_send .= "</form>";
+            $offer_send .= "</fieldset>";
+            $offer_send .= "</div>";
+            // $offer_send .= "<button onclick=fm1() >承認</button>";
+            // $offer_send .= "<button onclick=fm2() >拒否</button>";
+            // $offer_send .= "</form>";
+        }
+        unset($value);
+    } else {
 
 
-// $sql = 'SELECT * FROM users_table WHERE id = :id';
-// $stmt = $pdo->prepare($sql);
-// $stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
-// $status = $stmt->execute();
+        $offer_send = "申請がありません";
+    }
+}
 
-// if ($status == false) {
-//     $error = $stmt->errorInfo();
-//     echo json_encode(["user_error_msg" => "{$error[2]}"]);
-//     exit();
-// } else {
-//     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-// }
+// var_dump($offer_send);
+// exit();
+
 $sql = 'SELECT COUNT(*) FROM item_table WHERE owner_id = :id AND is_status = 2';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
@@ -127,6 +160,21 @@ if ($status == false) {
 } else {
     $request_count = $stmt->fetch();
 }
+
+$sql = 'SELECT * FROM users_table WHERE id = :id  ';
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
+$status = $stmt->execute();
+
+if ($status == false) {
+    $error = $stmt->errorInfo();
+    echo json_encode(["user_error_msg" => "{$error[2]}"]);
+    exit();
+} else {
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user_output = "";
+    $user_output .= "<div>ユーザーネーム<br>{$result["user_name"]}</div>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -138,57 +186,115 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>マイページ</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .select {
+            margin: 35px 0 0 100px;
+        }
+
+        h3 {
+            margin: 35px 0 0 30px;
+            /* padding: 10px 0 0 0;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+
+        .aa {
+            width: 100%;
+            /* background-color: #ff9a4a; */
+            text-align: center;
+            border: solid 1px black;
+        }
+
+        .sign_up {
+            margin: 35px 0 0 80px;
+        }
+
+
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+    </style>
 </head>
 
 <body>
-    <div class="head-menu">
-        <div class="search">
-            <input type="text" name="search" placeholder="検索" value="" size="20">
+    <div class="top">
+        <div class="head-menu">
+            <a href="index.php">
+                <h3>ホリマニア</h3>
+            </a>
+            <!-- <div class="search">
+                <input type="text" name="search" placeholder="検索" value="" size="20">
+            </div> -->
+            <div class="info">
+                <a href="info.php">🔔<?= $request_count[0] ?>件</a>
+            </div>
+            <div class="log_out">
+                <a href="log_out.php">ログアウト</a>
+            </div>
         </div>
-        <div class="info">
-            <a href="info.php">🔔<?= $request_count[0] ?>件</a>
+        <!-- ハンバーガーメニュー -->
+        <div class="menu-btn">
+            <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
-        <div class="log_out">
-            <a href="log_out.php">ログアウト</a>
+
+        <div class="menu">
+            <div class="menu__item">プロフィール</div>
+
+            <div class="menu__item"> <?= $user_output ?></div>
+            <br>
+            <br>
+            <a href="user_edit.php" class="menu__item">アカウント編集</a>
+            <a href="setting.php" class="menu__item">設定</a>
+            <a href="company.php" class="menu__item">ホリマニアとは？</a>
+            <a href="help.php" class="menu__item">ヘルプ</a>
+            <a href="contact.php" class="menu__item">お問い合わせ</a>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div>
+            <a href="my_post.php" style="display:flex;justify-content:center;align-items: center;">投稿一覧</a>
+        </div>
+        <div style="display:flex;justify-content:space-evenly;align-items: center;">
+            <a href=" my_page.php">出品中</a>|
+            <a href="offer.php" style="background-color: #a9a9a9;">オファー</a>|
+            <a href="treading.php">取引中</a>|
+            <a href="finished.php">取引済み</a>
         </div>
     </div>
-    <!-- ハンバーガーメニュー -->
-    <div class="menu-btn">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-    <div class="menu">
-        <a href="user_edit.php" class="menu__item">アカウント編集</a>
-        <a href="setting.php" class="menu__item">設定</a>
-        <a href="company.php" class="menu__item">ホリマニアとは？</a>
-        <a href="help.php" class="menu__item">ヘルプ</a>
-        <a href="contact.php" class="menu__item">お問い合わせ</a>
-    </div>
-    <div class="top-memu">
-        <a href="my_post.php">投稿一覧</a>
-    </div>
-    <div class="sub-memu">
-        <a href="my_page.php">出品中</a>
-        <a href="offer.php">オファー</a>
-        <a href="treading.php">取引中</a>
-        <a href="finished.php">取引済み</a>
-    </div>
-    <div>
-        <h1>オファー中</h1>
-    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br><br>
+
+    <h1>オファー中</h1>
+
     <?= $my_result ?>
     <?= $tradeitem_result ?>
 
     <div>
-        <h1>オファー受信</h1>
+        <h1>オファー申請</h1>
     </div>
+    <?= $offer_send ?>
+
+    <?= $offer_post ?>
 
     <br>
-    <form action="item_yes.php" method="POST" class="yes">
-        <input type="submit" name="yes" value="承諾" width="50px" height="50px">
-    </form>
-    <form action="item_no.php" method="POST" class="no">
-        <input type="submit" name="no" value="拒否" width="50px" height="50px">
-    </form>
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -211,6 +317,26 @@ if ($status == false) {
                 $('.menu').toggleClass('is-active');
             });
         }());
+        const fm = document.getElementById('fm');
+        // $("[class^='test']")
+        // $("[#^='fm']").attr("method", "post");
+        // $(this).attr("action", "item_yes.php");
+
+        function fm1() {
+            alert("o")
+            fm.method = "post";
+            fm.action = "item_yes.php";
+            // $("[#^='fm']").attr("method", "post");
+            // $(this).attr("action", "item_yes.php");
+        }
+
+        function fm2(e) {
+            console.log(`q${e}`);
+            alert('fm2')
+            fm.method = "post";
+            fm.action = "item_no.php";
+
+        }
     </script>
 </body>
 

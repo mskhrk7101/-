@@ -3,10 +3,11 @@ session_start();
 include('functions.php');
 check_session_id();
 $pdo = connect_to_db();
+$user_id = $_SESSION['user_id'];
 
 $sql = 'SELECT * FROM users_table WHERE id=:id';
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
 if ($status == false) {

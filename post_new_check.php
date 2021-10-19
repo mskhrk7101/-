@@ -70,22 +70,24 @@ if ($status == false) {
 <body>
     <form action="post_status.php" method="POST" class="back">
         <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px"> <br>
-        出品TOPへ戻る
+
     </form>
     <div>
         <h1>出品確認</h1>
     </div>
-    <form action="post_display.php" method="POST" class="check">
-
-        <fieldset>
-            商品状態：<?= $item_status ?>
-            ブランド名： <?= $brand_name ?><br>
-            種類：<?= $kinds ?><br>
-            <img src="<?= $item_image ?>" alt="" width="360px"> <br>
-            商品名：<?= $item_name ?><br>
-            サイズ：<?= $size ?><br>
-        </fieldset>
-        <input type="submit" value="出品" name="send">
+    <form action="post_display.php" method="POST">
+        <div class='size'>
+            <fieldset style="width: 300px;">
+                商品状態：<?= $item_status ?>
+                ブランド名： <?= $brand_name ?><br>
+                種類：<?= $kinds ?><br>
+                <img src="<?= $item_image ?>" alt="" width="300px"> <br>
+                商品名：<?= $item_name ?><br>
+                サイズ：<?= $size ?><br>
+            </fieldset>
+            <br>
+            <input type="submit" value="出品" name="send" class="aa" style="width: 300px;">
+        </div>
     </form>
     <div class="sub-top">
         <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>

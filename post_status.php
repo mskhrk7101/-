@@ -28,13 +28,26 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>出品ページ</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        h3 {
+            margin: 35px 0 0 30px;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+    </style>
 </head>
 
 <body>
     <div class="head-menu">
-        <div class="search">
+        <a href="index.php">
+            <h3>ホリマニア</h3>
+        </a>
+        <!-- <div class="search">
             <input type="text" name="search" placeholder="検索" value="" size="20">
-        </div>
+        </div> -->
         <div class="info">
             <a href="info.php">🔔<?= $request_count[0] ?>件</a>
         </div>
@@ -53,9 +66,15 @@ if ($status == false) {
         <a href="help.php" class="menu__item">ヘルプ</a>
         <a href="contact.php" class="menu__item">お問い合わせ</a>
     </div>
-    <div class="status">
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>商品状態</h1>
+    <br>
+    <br>
+    <div style="display:flex;justify-content:space-evenly;align-items: center;">
         <form action="post_new_brand.php" method="POST" class="item_status">
-            <img src="img/スニーカー・シューズのイラストアイコン素材 7.png" alt="new" width="50px" height="50px"><br>
             <input type="hidden" name="item_status" value="新品">
             <input type="hidden" name="brand_name" value=''>
             <input type="hidden" name="kinds" value=''>
@@ -72,10 +91,13 @@ if ($status == false) {
             <input type="hidden" name="owner_id" value=''>
             <input type="hidden" name="is_status" value=''>
             <input type="hidden" name="treaditem_id" value=''>
-            <button type="submit">新品</button>
+            <input type="hidden" name="send_status" value=''>
+
+            <button type="submit"><img src="img/スニーカー・シューズのイラストアイコン素材 7.png" alt="new" width="100px" height="100px"><br>新品</button>
+
         </form>
+
         <form action="post_old_brand.php" method="POST" class="item_status">
-            <img alt="old" src="img/iconmonstr-recycling-2.png" width="50px" height="50px"><br>
             <input type="hidden" name="item_status" value="中古">
             <input type="hidden" name="brand_name" value=''>
             <input type="hidden" name="kinds" value=''>
@@ -92,8 +114,10 @@ if ($status == false) {
             <input type="hidden" name="owner_id" value=''>
             <input type="hidden" name="is_status" value=''>
             <input type="hidden" name="treaditem_id" value=''>
-            <button type="submit">中古</button>
+            <input type="hidden" name="send_status" value=''>
+            <button type="submit"><img alt="old" src="img/iconmonstr-recycling-2.png" width="100px" height="100px"><br>中古</button>
         </form>
+
     </div>
     <div class="sub-top">
         <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>

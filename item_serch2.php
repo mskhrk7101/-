@@ -1,9 +1,9 @@
 <?php
 session_start();
 include("functions.php");
+check_session_id();
 $pdo = connect_to_db();
-// var_dump($_POST);
-// exit();
+$user_id = $_SESSION['user_id'];
 
 $brand_name = $_POST['brand_name'];
 $kinds = $_POST['kinds'];
@@ -30,7 +30,7 @@ if ($status == false) {
     exit('sqlError:' . $error[2]);
 } else {
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $item_output .= '<form action="result_serch.php" method="POST">';
+        $item_output .= '<form action="result_serch2.php" method="POST">';
         $item_output .= "<img src='{$result['item_image']}'width='375px'>";
         $item_output .= "<div>商品名:{$result["item_name"]}</div>";
         $item_output .= '<div>商品状態</div>';
@@ -64,7 +64,7 @@ if ($status == false) {
         $item_output .= "<input type='hidden' name='brand_name' value='{$result["brand_name"]}'>";
         $item_output .= "<input type='hidden' name='kinds' value='{$result["kinds"]}'>";
         $item_output .= "<input type='hidden' name='item_id' value='{$result["id"]}'>";
-        $item_output .= "<button type=submit>トレード</button>";
+        $item_output .= "<button type=submit>検索</button>";
         $item_output .= "</form>";
     }
 }
@@ -83,7 +83,7 @@ if ($status == false) {
 
 <body>
     <form action="index2.php" method="POST" class="back">
-        <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
+        <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px" style="margin-top: 20px;">
     </form>
     <h2>商品名</h2>
 

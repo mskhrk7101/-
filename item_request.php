@@ -77,13 +77,13 @@ if ($status == false) {
     <fieldset>
         <legend>自分の出品商品 一覧</legend>
         <h3>トレードするアイテムを選択して下さい</h3>
-        <table>
 
-            <?= $output ?>
 
-        </table>
+        <?= $output ?>
+
+
     </fieldset>
-
+    <br><br><br><br>
     <div class="sub-top">
         <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 

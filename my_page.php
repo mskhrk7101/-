@@ -18,7 +18,7 @@ if ($status == false) {
 } else {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $user_output = "";
-    $user_output .= "<div>ユーザーネーム：{$result["user_name"]}</div>";
+    $user_output .= "<div>ユーザーネーム<br>{$result["user_name"]}さん</div>";
 }
 $sql = 'SELECT * FROM item_table WHERE owner_id = :id AND is_status = 0';
 $stmt = $pdo->prepare($sql);
@@ -33,13 +33,15 @@ if ($status == false) {
     $result = $stmt->fetchALL(PDO::FETCH_ASSOC);
     $item_output = "";
     foreach ($result as $record) {
+        $item_output .= "<div class='size'>";
         $item_output .= "<img src='{$record["item_image"]}' width='300px'>";
-        $item_output .= "<a href='item_delete.php?id={$record["id"]}'>削除</a>";
-        $item_output .= "<div>メーカー:{$record["brand_name"]}</div>";
-        $item_output .= "<div>種類:{$record["kinds"]}</div>";
-        $item_output .= "<div>商品名:{$record["item_name"]}</div>";
-        $item_output .= "<div>サイズ:{$record["size"]}</div>";
-        $item_output .= "<div>0人がオファー中</div>";
+        $item_output .= "<div style='width: 300px;'>{$record["brand_name"]}</div>";
+        $item_output .= "<div style='width: 300px;'>{$record["kinds"]}</div>";
+        $item_output .= "<div style='width: 300px;':>{$record["item_name"]}</div>";
+        $item_output .= "<div style='width: 300px;':>{$record["size"]}</div>";
+        // $item_output .= "<div>0人がオファー中</div>";
+        $item_output .= "<div style='width: 300px;' class='aa'><a href='item_delete.php?id={$record["id"]}'>削除</a></div><br>";
+        $item_output .= "</div>";
     }
     unset($value);
 }
@@ -67,36 +69,53 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>マイページ</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .select {
+            margin: 35px 0 0 100px;
+        }
+
+        h3 {
+            margin: 35px 0 0 30px;
+            /* padding: 10px 0 0 0;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+
+        .aa {
+            width: 100%;
+            /* background-color: #ff9a4a; */
+            text-align: center;
+            border: solid 1px black;
+        }
+
+        .sign_up {
+            margin: 35px 0 0 80px;
+        }
+
+
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+    </style>
 </head>
 
 <body>
-
-    <!-- ハンバーガーメニュー -->
-    <div class="menu-btn">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-
-
-    <div class="menu">
-        <div class="menu__item">プロフィール</div>
-
-        <div class="menu__item"> <?= $user_output ?></div>
-        <br>
-        <br>
-
-        <a href="user_edit.php" class="menu__item">アカウント編集</a>
-        <a href="setting.php" class="menu__item">設定</a>
-        <a href="company.php" class="menu__item">ホリマニアとは？</a>
-        <a href="help.php" class="menu__item">ヘルプ</a>
-        <a href="contact.php" class="menu__item">お問い合わせ</a>
-        <a href="item_resister.php" class="menu__item">管理ページ</a>
-        <a href="launch_resister.php" class="menu__item">発売掲載管理</a>
-    </div>
     <div class="top">
         <div class="head-menu">
-            <div class="search">
+            <a href="index.php">
+                <h3>ホリマニア</h3>
+            </a>
+            <!-- <div class="search">
                 <input type="text" name="search" placeholder="検索" value="" size="20">
-            </div>
+            </div> -->
             <div class="info">
                 <a href="info.php">🔔<?= $request_count[0] ?>件</a>
             </div>
@@ -104,19 +123,45 @@ if ($status == false) {
                 <a href="log_out.php">ログアウト</a>
             </div>
         </div>
-        <div>
-            <a href="my_post.php">投稿一覧</a>
+        <!-- ハンバーガーメニュー -->
+        <div class="menu-btn">
+            <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
+        <div class="menu">
+
+            <div class="menu__item"> <?= $user_output ?></div>
+            <br>
+            <br>
+
+            <a href="user_edit.php" class="menu__item">アカウント編集</a>
+            <a href="setting.php" class="menu__item">設定</a>
+            <a href="company2.php" class="menu__item">ホリマニアとは？</a>
+            <a href="help2.php" class="menu__item">ヘルプ</a>
+            <a href="contact2.php" class="menu__item">お問い合わせ</a>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
         <div>
-            <a href="my_page.php">出品中</a>
-            <a href="offer.php">オファー</a>
-            <a href="treading.php">取引中</a>
+            <a href="my_post.php" style="display:flex;justify-content:center;align-items: center;">投稿一覧</a>
+        </div>
+        <div style="display:flex;justify-content:space-evenly;align-items: center;">
+            <a href=" my_page.php" style="background-color: #a9a9a9;">出品中</a>|
+            <a href="offer.php">オファー</a>|
+            <a href="treading.php">取引中</a>|
             <a href="finished.php">取引済み</a>
         </div>
     </div>
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
+    <br><br>
 
     <h1>出品中</h1>
     <?= $item_output ?>

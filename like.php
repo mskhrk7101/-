@@ -28,15 +28,26 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>お気に入り</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        h3 {
+            margin: 35px 0 0 30px;
+            /* padding: 10px 0 0 0;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+    </style>
 </head>
 
 <body>
     <div class="head-menu">
-        <div class="search">
-            <input type="text" name="search" placeholder="検索" value="" size="20">
-        </div>
+        <a href="index.php">
+            <h3>ホリマニア</h3>
+        </a>
         <div class="info">
-            <a href="info.php">🔔<?= $request_count[0] ?>件</a>
+            <a href="info.php">🔔<?= $request_count[0] ?>件</a>
         </div>
         <div class="log_out">
             <a href="log_out.php">ログアウト</a>
@@ -53,6 +64,10 @@ if ($status == false) {
         <a href="help.php" class="menu__item">ヘルプ</a>
         <a href="contact.php" class="menu__item">お問い合わせ</a>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
     <h1>お気に入り</h1>
     <div class="sub-top">
         <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>

@@ -30,11 +30,12 @@ if ($status == false) {
     exit('sqlError:' . $error[2]);
 } else {
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $item_output .= "<div class='size'>";
         $item_output .= '<form action="result_serch.php" method="POST">';
-        $item_output .= "<img src='{$result['item_image']}'width='375px'>";
-        $item_output .= "<div>商品名:{$result["item_name"]}</div>";
+        $item_output .= "<img src='{$result['item_image']}'width='300px'>";
+        $item_output .= "<div style='width: 300px';>商品名:{$result["item_name"]}</div>";
         $item_output .= '<div>サイズ</div>';
-        $item_output .= '<select name="size">';
+        $item_output .= '<select name="size" style="width: 280px";>';
         $item_output .=  '<option value="">-</option>';
         $item_output .=     '<option value="23.0">23.0</option>';
         $item_output .=   '<option value="23.5">23.5</option>';
@@ -58,8 +59,9 @@ if ($status == false) {
         $item_output .= "<input type='hidden' name='brand_name' value='{$result["brand_name"]}'>";
         $item_output .= "<input type='hidden' name='kinds' value='{$result["kinds"]}'>";
         $item_output .= "<input type='hidden' name='item_id' value='{$result["id"]}'>";
-        $item_output .= "<button type=submit>トレード</button>";
+        $item_output .= "<button type=submit style='display:flex;' 'text-align:center;'>検索</button>";
         $item_output .= "</form>";
+        $item_output .= "</div>";
     }
 }
 
@@ -73,18 +75,25 @@ if ($status == false) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>検索</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+    </style>
 </head>
 
 <body>
-    <form action="index.php" method="POST" class="back">
-        <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
+    <form action="index.php" method="POST" class="back" 　>
+        <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px" style="margin-top: 20px;">
     </form>
     <h2>商品名</h2>
     </div>
     <?= $item_output ?>
-    <form action="" method="POST">
-        <button value="">出品</button>
-    </form>
+
 
     <form action="contact.php" method="POST" class="contact">
         <label>商品がない場合はこちら</label> <br>

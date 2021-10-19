@@ -1,7 +1,9 @@
 <?php
 session_start();
-include('functions.php');
+include("functions.php");
+check_session_id();
 $pdo = connect_to_db();
+$user_id = $_SESSION['user_id'];
 // var_dump($_POST);
 // exit();
 if (
@@ -9,7 +11,8 @@ if (
 ) {
     exit('Param Error');
 }
-// var_dump($_POST);
+
+// var_dump($item_status);
 // exit();
 $item_status = $_POST["item_status"];
 $brand_name = $_POST["brand_name"];
@@ -27,11 +30,14 @@ $size = $_POST["size"];
 $owner_id = $_POST["owner_id"];
 $is_status = $_POST["is_status"];
 $treaditem_id = $_POST["treaditem_id"];
+$send_status = $_POST["send_status"];
 // var_dump($_POST);
 // exit();
+// var_dump($item_status);
+// exit();
 try {
-    $sql = 'INSERT INTO item_table (id, item_status, brand_name, kinds, item_color, item_image, item_image2, item_image3, item_image4, item_image5,item_image6, item_name, good, size, owner_id, is_status, treaditem_id,created_at, updated_at)
-VALUES  (NULL, :item_status, :brand_name, :kinds, :item_color, :item_image, :item_image2, :item_image3, :item_image4, :item_image5,:item_image6, :item_name, :good, :size, :owner_id, :is_status, :treaditem_id, sysdate(), sysdate())';
+    $sql = 'INSERT INTO item_table (id, item_status, brand_name, kinds, item_color, item_image, item_image2, item_image3, item_image4, item_image5,item_image6, item_name, good, size, owner_id, is_status, treaditem_id, send_status, created_at, updated_at)
+VALUES  (NULL, :item_status, :brand_name, :kinds, :item_color, :item_image, :item_image2, :item_image3, :item_image4, :item_image5,:item_image6, :item_name, :good, :size, :owner_id, :is_status, :treaditem_id, :send_status, sysdate(), sysdate())';
     // var_dump('ok');
     // exit();
     $stmt = $pdo->prepare($sql);
@@ -51,6 +57,7 @@ VALUES  (NULL, :item_status, :brand_name, :kinds, :item_color, :item_image, :ite
     $stmt->bindValue(':owner_id', $owner_id, PDO::PARAM_STR);
     $stmt->bindValue(':is_status', $is_status, PDO::PARAM_STR);
     $stmt->bindValue(':treaditem_id', $treaditem_id, PDO::PARAM_STR);
+    $stmt->bindValue(':send_status', $send_status, PDO::PARAM_STR);
     $status = $stmt->execute();
 } catch (Exception $e) {
     var_dump($e);
@@ -68,7 +75,6 @@ if ($status == false) {
     $status = $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,37 +83,65 @@ if ($status == false) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新品</title>
+    <title>中古</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <form action="post_status.php" method="POST" class="back">
-        <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
+        <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px" style="margin-top: 20px;">
     </form>
     <div>
         <h1>ブランド選択</h1>
     </div>
 
-    <form action="post_old_kinds.php" method="POST">
-        <select name="brand_name">
-            <option value="">-</option>
-            <option value="nike">nike</option>
-            <option value="jordan">jordan</option>
-            <option value="addidass">addidass</option>
-            <option value="reebok">reebok</option>
-            <option value="new_balanc">new_balanc</option>
-            <option value="others">others</option>
-        </select>
-        <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
-        <button type="submit">決定</button>
-    </form>
+    <br>
+    <div class="brand">
+        <form action="post_old_kinds.php" method="POST">
+            <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
+            <input type="hidden" name="item_status" value="<?= $item_status ?>">
+            <button type="submit" value="NIKE" name="brand_name"><img src="img/nike.png" alt="" width="70px" height="50px"><br> nike</button>
+        </form>
 
+        <form action="post_old_kinds.php" method="POST">
+            <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
+            <input type="hidden" name="item_status" value="<?= $item_status ?>">
+            <button type="submit" value="JORDAN" name="brand_name"><img src="img/jordan.png" alt="" width="70px" height="50px"><br> jordan</button>
+        </form>
 
+        <form action="post_old_kinds.php" method="POST">
+            <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
+            <input type="hidden" name="item_status" value="<?= $item_status ?>">
+            <button type="submit" value="adidas" name="brand_name"><img src="img/adidas.png" alt="" width="70px" height="50px"><br> adidas</button>
+        </form>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="brand">
+        <form action="post_old_kinds.php" method="POST">
+            <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
+            <input type="hidden" name="item_status" value="<?= $item_status ?>">
+            <button type="submit" value="Reebok" name="brand_name"><img src="img/reebok.gif" alt="" width="70px" height="50px"><br> reebok</button>
+        </form>
+        <form action="post_old_kinds.php" method="POST">
+            <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
+            <input type="hidden" name="item_status" value="<?= $item_status ?>">
+            <button type="submit" value="new balance" name="brand_name"><img src="img/new balance.gif" alt="" width="70px" height="50px"><br> new balance</button>
+        </form>
+        <form action="post_old_kinds.php" method="POST">
+            <input type="hidden" name="item_id" value="<?= $result[0]['id'] ?>">
+            <input type="hidden" name="item_status" value="<?= $item_status ?>">
+            <button type="submit" value="others" name="brand_name"><img src="img/iconmonstr-share-2.png" alt="" width="70px" height="50px"><br> others</button>
+        </form>
+    </div>
+
+    <br><br><br><br><br><br>
     <div class="sub-top">
-        <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
+        <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 
-        <a href="media.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
+        <a href="media2.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
 
         <a href="post_status.php"><img alt="post_status" src="img/iconmonstr-plus-circle-thin.png" width="50px" height="50px"> <br> 出品</a> <br>
 

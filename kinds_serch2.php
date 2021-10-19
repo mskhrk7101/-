@@ -1,8 +1,9 @@
 <?php
 session_start();
 include("functions.php");
+check_session_id();
 $pdo = connect_to_db();
-
+$user_id = $_SESSION['user_id'];
 // var_dump($_POST);
 // exit();
 $brand_name = $_POST['brand_name'];
@@ -36,11 +37,16 @@ if ($status == false) {
     // $item_output = $stmt->fetch(PDO::FETCH_ASSOC);
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $item_output .= '<form action="item_serch2.php" method="POST">';
+        $item_output .= "<h2>-{$result["brand_name"]}-</h2>";
+        $item_output .= "<div class='box'>";
         $item_output .= "<div>{$result["kinds"]}</div>";
+        $item_output .= "<div class='aa'>";
+        $item_output .= "<button type=submit class='btn'>選択</button>";
+        $item_output .= "</div>";
         $item_output .= "<input type='hidden' name='brand_name' value='{$result["brand_name"]}'>";
         $item_output .= "<input type='hidden' name='kinds' value='{$result["kinds"]}'>";
-        $item_output .= "<button type=submit>選択</button>";
         $item_output .= "</form>";
+        $item_output .= "</div>";
     }
 }
 ?>
@@ -53,10 +59,27 @@ if ($status == false) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>検索</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .box {
+            display: flex;
+        }
+
+        .btn {
+            background-color: white;
+            margin: 0 0 5px 20px;
+            width: 200px;
+        }
+
+        .aa {
+            width: 100%;
+
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="index2.php" method="POST" class="back">
+    <form action="index2.php" method="POST" class="back" style="margin-top: 20px;">
         <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
     </form>
     <div>

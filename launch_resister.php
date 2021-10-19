@@ -20,6 +20,14 @@
                 <input type="file" name="image" accept="image/*" capture="camera">
             </div>
             <div>
+                <label>ブランド</label><br>
+                <input type="text" name="brand_name">
+            </div>
+            <div>
+                <label>種類</label><br>
+                <input type="text" name="kinds">
+            </div>
+            <div>
                 <input type="date" name="release_date" value="" size="30">
             </div>
             <div>

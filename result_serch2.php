@@ -43,6 +43,7 @@ if ($status == false) {
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $item_output .= '<form action="select_item.php" method="POST">';
         $item_output .= "<img src='{$result['item_image']}'width='375px'>";
+        $item_output .= "<div>{$result["id"]}</div>";
         $item_output .= "<div>{$result["kinds"]}</div>";
         $item_output .= "<div>{$result["item_name"]}</div>";
         $item_output .= "<div>{$result["size"]}</div>";

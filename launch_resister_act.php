@@ -10,6 +10,8 @@ $pdo = connect_to_db();
 
 if (
     !isset($_POST['release_date']) || $_POST['release_date'] == '' ||
+    !isset($_POST['brand_name']) || $_POST['brand_name'] == '' ||
+    !isset($_POST['kinds']) || $_POST['kinds'] == '' ||
     !isset($_POST['shoes']) || $_POST['shoes'] == ''
 ) {
     echo json_encode(["error_msg" => "no input"]);
@@ -39,17 +41,21 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
 }
 $release_date = $_POST['release_date'];
 $shoes = $_POST['shoes'];
+$brand_name = $_POST['brand_name'];
+$kinds = $_POST['kinds'];
 // var_dump($_SESSION);
 // exit();
 // var_dump($_POST);
 // exit();
 
 
-$sql = 'INSERT INTO launch_table(id,image, release_date,shoes,created_at) VALUES(NULL, :image, :release_date,:shoes, sysdate())';
+$sql = 'INSERT INTO launch_table(id,image,brand_name,kinds,release_date,shoes,created_at) VALUES(NULL, :image,:brand_name,:kinds, :release_date,:shoes, sysdate())';
 
 try {
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':image', $filename_to_save, PDO::PARAM_STR);
+    $stmt->bindValue(':kinds', $kinds, PDO::PARAM_STR);
+    $stmt->bindValue(':brand_name', $brand_name, PDO::PARAM_STR);
     $stmt->bindValue(':release_date', $release_date, PDO::PARAM_STR);
     $stmt->bindValue(':shoes', $shoes, PDO::PARAM_STR);
     $status = $stmt->execute();

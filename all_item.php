@@ -15,12 +15,15 @@ if ($status == false) {
     $result = $stmt->fetchALL(PDO::FETCH_ASSOC);
     $item_output = "";
     foreach ($result as $record) {
+        $item_output .= "<div class='size'>";
         $item_output .= "<img src='{$record["item_image"]}' width='300px'>";
-        $item_output .= "<a href='item_select.php?id={$record["id"]}'>選択</a>";
-        $item_output .= "<div>メーカー:{$record["brand_name"]}</div>";
-        $item_output .= "<div>種類:{$record["kinds"]}</div>";
-        $item_output .= "<div>商品名:{$record["item_name"]}</div>";
-        $item_output .= "<div>サイズ:{$record["size"]}</div>";
+        // $item_output .= "<div>メーカー:{$record["brand_name"]}</div>";
+        $item_output .= "<div style='width: 300px;'>{$record["kinds"]}<br></div>";
+        $item_output .= "<div style='width: 300px;'>{$record["item_name"]}<br></div>";
+        $item_output .= "<div style='width: 300px;'>{$record["size"]}cm</div>";
+        $item_output .= "<div style='width: 300px;' class='aa'><a href='item_select.php?id={$record["id"]}'>選択する</a></div><br>";
+        // $item_output .= "<div>0人がオファー中</div>";
+        $item_output .= "</div>";
     }
     unset($value);
 }
@@ -37,6 +40,53 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>マーケット ホーム</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .select {
+            margin: 35px 0 0 100px;
+        }
+
+        h3 {
+            margin: 35px 0 0 30px;
+            /* padding: 10px 0 0 0;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+
+
+
+        .aa {
+            width: 100%;
+            /* background-color: #ff9a4a; */
+            text-align: center;
+            border: solid 1px black;
+        }
+
+
+
+
+        .all {
+            color: black;
+            font-size: 20px;
+            /* border: solid 1px black; */
+        }
+
+        .sign_up {
+            margin: 35px 0 0 80px;
+        }
+
+
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -49,7 +99,7 @@ if ($status == false) {
         <a href="help.php" class="menu__item">ヘルプ</a>
         <a href="contact.php" class="menu__item">お問い合わせ</a>
     </div>
-    <form action="index.php" method="POST" class="back">
+    <form action="index2.php" method="POST" class="back">
         <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
     </form>
     <h1>全商品一覧</h1>

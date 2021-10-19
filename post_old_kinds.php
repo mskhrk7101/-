@@ -5,7 +5,7 @@ check_session_id();
 $pdo = connect_to_db();
 // var_dump($_POST);
 // exit();
-$item_id = $_POST['item_id'];
+$item_status = $_POST['item_status'];
 $brand_name = $_POST['brand_name'];
 // var_dump($_POST);
 // exit();
@@ -82,8 +82,8 @@ if ($status == false) {
     </form>
     <fieldset>
         <legend>選択中の項目</legend>
-        <?= $item['item_status'] ?><br>
-        ブランド名:<?= $item['brand_name'] ?>
+        <?= $item_status ?><br>
+        ブランド名:<?= $brand_name ?>
     </fieldset>
     <label for="row">並び替え</label>
 

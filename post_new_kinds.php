@@ -3,18 +3,19 @@ session_start();
 include("functions.php");
 check_session_id();
 $pdo = connect_to_db();
+$user_id = $_SESSION['user_id'];
 // var_dump($_POST);
 // exit();
-$item_id = $_POST['item_id'];
+$item_status = $_POST['item_status'];
 $brand_name = $_POST['brand_name'];
-// var_dump($_POST);
-// exit();
+$item_id = $_POST['item_id'];
 
 if (
     !isset($_POST['brand_name']) || $_POST['brand_name'] == NULL
 ) {
     exit('ブランドが選択されていません');
 }
+
 $sql = 'UPDATE item_table SET  brand_name = :brand_name WHERE id = :id';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':brand_name', $brand_name, PDO::PARAM_STR);
@@ -55,27 +56,20 @@ if ($status == false) {
     // $item_output = $stmt->fetch(PDO::FETCH_ASSOC);
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $item_output .= '<form action="post_new_item.php" method="POST">';
+        $item_output .= "<h2>-{$result["brand_name"]}-</h2>";
+        $item_output .= "<div class='box'>";
         $item_output .= "<div>{$result["kinds"]}</div>";
+        $item_output .= "<div class='aa'>";
+        $item_output .= "<button type=submit class='btn'>選択</button>";
+        $item_output .= "</div>";
         $item_output .= "<input type='hidden' name='brand_name' value='{$result["brand_name"]}'>";
         $item_output .= "<input type='hidden' name='kinds' value='{$result["kinds"]}'>";
-        // $item_output .= " <input type='hidden' name='id' value='{$result[0]["id"]}'>";
+        $item_output .= "<input type='hidden' name='item_status' value='{$item_status}'>";
         $item_output .= " <input type='hidden' name='item_id' value='{$item_id}'>";
-        $item_output .= "<button type=submit>選択</button>";
         $item_output .= "</form>";
-
-
-        // $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // $item_output = "";
-        // foreach ($result as $record) {
-        //     $item_output .= "<div>{$record["kinds"]}</div>";
-        // }
-        // unset($value);
+        $item_output .= "</div>";
     }
 }
-// var_dump($item_id);
-// exit();
-// var_dump($result);
-// exit();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,24 +80,35 @@ if ($status == false) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新品</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .box {
+            display: flex;
+        }
+
+        .btn {
+            background-color: white;
+            margin: 0 0 5px 20px;
+            width: 200px;
+        }
+
+        .aa {
+            width: 100%;
+
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="post_new_brand.php" method="POST" class="back">
+    <form action="post_status.php" method="POST" class="back">
         <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
     </form>
     <fieldset>
         <legend>選択中の項目</legend>
-        <?= $item['item_status'] ?><br>
-        ブランド名:<?= $item['brand_name'] ?>
+        <?= $item_status ?><br>
+        ブランド名:<?= $brand_name ?>
     </fieldset>
-    <label for="row">並び替え</label>
 
-    <select name="row" id="row">
-        <option value="new">新しい順</option>
-        <option value="old">古い順</option>
-        <option value="brand">ブランド順</option>
-    </select>
     <div>
         <h2>商品種類</h2>
     </div>
@@ -113,9 +118,9 @@ if ($status == false) {
 
 
     <div class="sub-top">
-        <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
+        <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 
-        <a href="media.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
+        <a href="media2.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
 
         <a href="post_status.php"><img alt="post_status" src="img/iconmonstr-plus-circle-thin.png" width="50px" height="50px"> <br> 出品</a> <br>
 

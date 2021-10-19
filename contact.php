@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('functions.php');
-check_session_id();
 $pdo = connect_to_db();
 
 $user_name = $_SESSION['user_name'];
@@ -28,20 +27,59 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>お問い合わせ</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        h3 {
+            margin: 35px 0 0 30px;
+            /* padding: 10px 0 0 0;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+
+        .sign_up {
+            margin: 35px 0 0 80px;
+        }
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .aa {
+            width: 100%;
+            /* background-color: #ff9a4a; */
+            text-align: center;
+            border: solid 1px black;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="head-menu">
+        <!-- <div class="search">
+            <input type="text" name="search" placeholder="検索" value="" size="20">
+        </div> -->
+        <a href="index.php">
+            <h3>ホリマニア</h3>
+        </a>
+        <div class="log_in">
+            <a href="log_in.php">ログイン/新規登録</a>
+        </div>
+    </div>
     <!-- ハンバーガーメニュー -->
     <div class="menu-btn">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
     <div class="menu">
-        <a href="user_edit.php" class="menu__item">アカウント編集</a>
-        <a href="setting.php" class="menu__item">設定</a>
         <a href="company.php" class="menu__item">ホリマニアとは？</a>
         <a href="help.php" class="menu__item">ヘルプ</a>
         <a href="contact.php" class="menu__item">お問い合わせ</a>
     </div>
+    <br><br><br><br>
     <div>
         <h1>お問い合わせフォーム</h1>
     </div>
@@ -50,18 +88,18 @@ if ($status == false) {
     </div>
     <div>
         <form action="contact_check.php" method="POST">
-            <div class="form">
+            <div class="size">
                 <table>
 
-                    <div class="text">お名前 </div>
+                    <div style='width: 300px;'>お名前 </div>
 
-                    <div class="text"><input type="text" name="user_name" value="<?= $result['user_name'] ?>" size="30"></div>
+                    <div style='width: 300px;'><input type="text" name="user_name" value="<?= $result['user_name'] ?>" size="30"></div>
 
-                    <div class="text">メールアドレス </div>
+                    <div style='width: 300px;'>メールアドレス </div>
                     <div><input type="text" name="email" value="<?= $result['email'] ?>" size="30"></div>
 
                     <div class="text">カテゴリ</div>
-                    <div>
+                    <div style='width: 300px;'>
                         <select name="content_title">
                             <option value="">項目を選択してください</option>
                             <option value="アカウントについて">アカウントについて</option>
@@ -72,15 +110,16 @@ if ($status == false) {
                     </div>
 
 
-                    <div class="text">お問合せ内容</div>
+                    <div style='width: 300px;'>お問合せ内容</div>
                     <div><textarea name="content" rows="5" placeholder="内容を入力" type="text" size="30"></textarea></div>
 
                 </table>
+                <div style='width: 300px;' class='aa'>
+                    <button type="submit">確認画面へ</button>
+                </div>
             </div>
     </div>
-    <div class="submit">
-        <button type="submit">確認画面へ</button>
-    </div>
+
     <div class="sub-top">
         <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 

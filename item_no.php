@@ -1,3 +1,41 @@
+<?php
+// var_dump($_POST);
+// exit();
+session_start();
+include("functions.php");
+check_session_id();
+$pdo = connect_to_db();
+$user_id = $_SESSION['user_id'];
+$treaditem_id = $_POST['treaditem_id'];
+$id = $_POST['user_id'];
+
+$sql = "UPDATE item_table SET treaditem_id='', is_status='' WHERE treaditem_id = :id";
+
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':id', $id, PDO::PARAM_STR);
+// $stmt->bindValue(':treaditem_id', $treaditem_id, PDO::PARAM_STR);
+$status = $stmt->execute();
+
+if ($status == false) {
+    $error = $stmt->errorInfo();
+    echo json_encode(["treaditem_id_error_msg" => "{$error[2]}"]);
+    exit();
+}
+
+$sql = "UPDATE item_table SET is_status='' ,treaditem_id=''  WHERE treaditem_id = :treaditem_id ";
+
+$stmt = $pdo->prepare($sql);
+// $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+$stmt->bindValue(':treaditem_id', $treaditem_id, PDO::PARAM_STR);
+$status = $stmt->execute();
+
+if ($status == false) {
+    $error = $stmt->errorInfo();
+    echo json_encode(["treaditem_id_error_msg" => "{$error[2]}"]);
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -23,13 +23,15 @@ if ($status == false) {
     $result = $stmt->fetchALL(PDO::FETCH_ASSOC);
     $item_output = "";
     foreach ($result as $record) {
+        $item_output .= "<div class='size'>";
         $item_output .= "<img src='{$record["item_image"]}' width='300px'>";
-        $item_output .= "<a href='item_select.php?id={$record["id"]}'>選択</a>";
-        $item_output .= "<div>メーカー:{$record["brand_name"]}</div>";
-        $item_output .= "<div>種類:{$record["kinds"]}</div>";
-        $item_output .= "<div>商品名:{$record["item_name"]}</div>";
-        $item_output .= "<div>サイズ:{$record["size"]}</div>";
-        $item_output .= "<div>0人がオファー中</div>";
+        // $item_output .= "<div>メーカー:{$record["brand_name"]}</div>";
+        $item_output .= "<div style='width: 300px;'>{$record["kinds"]}<br></div>";
+        $item_output .= "<div style='width: 300px;'>{$record["item_name"]}<br></div>";
+        $item_output .= "<div style='width: 300px;'>{$record["size"]}cm</div>";
+        $item_output .= "<div style='width: 300px;' class='aa'><a href='item_select.php?id={$record["id"]}'class='a'>選択する</a></div><br>";
+        // $item_output .= "<div>0人がオファー中</div>";
+        $item_output .= "</div>";
     }
     unset($value);
 }
@@ -57,17 +59,62 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>マーケット ホーム</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .select {
+            margin: 35px 0 0 100px;
+        }
+
+        h3 {
+            margin: 35px 0 0 30px;
+            /* padding: 10px 0 0 0;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+
+        .aa {
+            width: 100%;
+            /* background-color: #ff9a4a; */
+            text-align: center;
+            border: solid 1px black;
+        }
+
+        .all {
+            color: black;
+            font-size: 20px;
+            /* border: solid 1px black; */
+        }
+
+        .sign_up {
+            margin: 35px 0 0 80px;
+        }
+
+
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+    </style>
 </head>
 
 <body>
     <div class="head-menu">
-        <div class="search">
+        <!-- <div class="search">
             <input type="text" name="search" placeholder="検索" value="" size="20">
-        </div>
+        </div> -->
+        <a href="index.php">
+            <h3>ホリマニア</h3>
+        </a>
         <div class="info">
             <a href="info.php">🔔<?= $request_count[0] ?>件</a>
         </div>
-        <div class="sign_up">
+        <div class="log_out">
             <a href="log_out.php">ログアウト</a>
         </div>
     </div>
@@ -77,26 +124,34 @@ if ($status == false) {
     </div>
     <div class="menu">
         <a href="user_edit.php" class="menu__item">アカウント編集</a>
-        <a href="setting.php" class="menu__item">設定</a>
         <a href="company2.php" class="menu__item">ホリマニアとは？</a>
         <a href="help2.php" class="menu__item">ヘルプ</a>
         <a href="contact2.php" class="menu__item">お問い合わせ</a>
     </div>
-    <h1>出品商品</h1>
-    <form action="index_act.php" method="POST">
-        <select name="row" id="row">
-            <option value="new">新しい順</option>
-            <option value="old">古い順</option>
-            <option value="english">A~Z</option>
-        </select>
-        <button type="submit">選択</button>
-    </form>
-    <div>
-        <?= $item_output ?>
-    </div><br>
+    <br>
+    <br>
+    <br>
+
+    <div style="display: flex; position: fixed;top: 60px;width:375px;box-sizing:border-box;background:white;z-index:500;">
+        <h1>出品商品</h1>
+        <form action="index_act.php" method="POST" class="select">
+            <!-- class="select" -->
+            <select name="row" id="row">
+                <option value="new">新しい順</option>
+                <option value="old">古い順</option>
+                <option value="english">A~Z</option>
+            </select>
+            <button type="submit">選択</button>
+        </form>
+
+    </div>
+    <br>
+    <br>
+    <?= $item_output ?>
+    <br>
     <div class="all_item">
 
-        <a href="all_item2.php">全件表示</a>
+        <a href="all_item2.php" class="all">全件表示&nbsp;&nbsp;<img src="img/iconmonstr-share-11.png" alt="" height="20px" width="20px"></a>
 
     </div>
     <h1>ブランドから検索する</h1>
@@ -111,7 +166,7 @@ if ($status == false) {
         </form>
 
         <form action="kinds_serch2.php" method="POST">
-            <button type="submit" value="addidass" name="brand_name"><img src="img/adidas.png" alt="" width="70px" height="50px"><br> adidas</button>
+            <button type="submit" value="adidas" name="brand_name"><img src="img/adidas.png" alt="" width="70px" height="50px"><br> adidas</button>
         </form>
     </div>
 
@@ -129,8 +184,10 @@ if ($status == false) {
             <button type="submit" value="others" name="brand_name"><img src="img/iconmonstr-share-2.png" alt="" width="70px" height="50px"><br> others</button>
         </form>
     </div>
+
+    <br><br><br><br><br><br>
     <div class="sub-top">
-        <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
+        <a href="index2.php"><img alt=" market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 
         <a href="media2.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
 

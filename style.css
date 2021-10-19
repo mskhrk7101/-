@@ -1,15 +1,27 @@
 body{
   width: 375px;
   height: 812px;
+  margin: 0px;
 }
 .head-menu {
   display:flex;
 }
 .status{
-  display: flex;
-  justify-content:space-evenly;
-  align-items: center;
+  display:flex;
+justify-content:center;
+align-items: center;
+flex-direction: column;
 
+
+}
+.head-menu{
+  position: fixed;
+  top: 0px;
+  width:375px;
+  box-sizing:border-box;
+  background:white;
+  z-index:500;
+  padding-bottom: 60px;
 }
 .sub-top{
   display:flex;
@@ -21,6 +33,7 @@ body{
   box-sizing:border-box;
   background:white;
   z-index:500;
+  border-top: solid 3px;
 }
 .top{
   position: fixed;
@@ -29,6 +42,9 @@ body{
   box-sizing:border-box;
   background:white;
   z-index:500;
+}
+.back{
+  margin-top: 20px;
 }
 fieldset{
   width: 300px;
@@ -44,14 +60,51 @@ button{
 .all_item{
   text-align: center;
 }
+
+ a {
+  text-decoration: none;
+  color: black;
+}
+.log_in {
+margin: 35px 0 0 60px;
+          }
+          .log_out {
+margin: 37px 0 0 10px;
+          }
+.info{
+  margin: 35px 0 0 60px;
+}
+.memu2 {
+ /* margin: 10px auto 0 auto; */
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+            /* width: 360px; */
+            /* border: solid 1px; */
+            height: 40px;
+            text-align: center;
+            position: relative;
+display: flex; 
+position: fixed;
+top: 80px;
+width:375px;
+box-sizing:border-box;
+background:white;
+z-index:500;
+        }
+
+        h1{
+          margin-left: 10px;
+        }
+
 /* ハンバーガーメニュー */
 /*----------------------------
 * メニュー開閉ボタン
 *----------------------------*/
 .menu-btn {
   position: fixed;
-  top: 13px;
-  left: 340px;
+  top: 30px;
+  left: 330px;
   z-index:502;
   width: 30px;
   height: 30px;

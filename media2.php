@@ -18,9 +18,12 @@ if ($status == false) {
     $image = $result['image'];
     $launch_output = "";
     foreach ($result as $record) {
-        $launch_output .= "<img src='{$record["image"]}' class=img width='200px'>";
-        $launch_output .= "<div>{$record["release_date"]}</div>";
-        $launch_output .= "<div>{$record["shoes"]}</div>";
+        $launch_output .= "<div class='size'>";
+        $launch_output .= "<img src='{$record["image"]}'width='300px'>";
+        $launch_output .= "<div style='width: 300px; font-size:20px'>{$record["release_date"]}</div>";
+        $launch_output .= "<div style='width: 300px;'>{$record["kinds"]}</div>";
+        $launch_output .= "<div style='width: 300px;'>{$record["shoes"]}</div>";
+        $launch_output .= "</div>";
     }
     unset($value);
 }
@@ -48,13 +51,34 @@ if ($status == false) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>メディア</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        h3 {
+            margin: 35px 0 0 30px;
+            /* background-color: black; */
+            color: black;
+            /* width: 130px;
+            height: 40px; */
+            /* text-align: center; */
+        }
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+    </style>
 </head>
 
 <body>
     <div class="head-menu">
-        <div class="search">
+        <a href="index.php">
+            <h3>ホリマニア</h3>
+        </a>
+        <!-- <div class="search">
             <input type="text" name="search" placeholder="検索" value="" size="20">
-        </div>
+        </div> -->
         <div class="info">
             <a href="info.php">🔔<?= $request_count[0] ?>件</a>
         </div>
@@ -73,12 +97,24 @@ if ($status == false) {
         <a href="help.php" class="menu__item">ヘルプ</a>
         <a href="contact.php" class="menu__item">お問い合わせ</a>
     </div>
-    <div>
-        <a href="media2.php">Launch</a>
-        <a href="media_post2.php">投稿</a>
+    <div class="memu2">
+        <a href="media2.php" style="background-color: #a9a9a9; width:40%;">Launch</a>
+        |
+        <a href="media_post2.php" style="width: 40%;">投稿</a>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <h1>Launch</h1>
     <?= $launch_output ?>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="sub-top">
         <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 

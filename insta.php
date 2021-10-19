@@ -3,6 +3,7 @@ session_start();
 include("functions.php");
 check_session_id();
 $pdo = connect_to_db();
+$user_id = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
