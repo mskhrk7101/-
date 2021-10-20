@@ -4,6 +4,9 @@ include("functions.php");
 check_session_id();
 $pdo = connect_to_db();
 
+// var_dump($_POST);
+// exit();
+$id =$_SESSION['id'];
 $brand_name = $_POST['brand_name'];
 $kinds = $_POST['kinds'];
 $item_id = $_POST['item_id'];
@@ -77,6 +80,7 @@ try {
 
     <div>
         <h2>画像選択</h2>
+        <div style="color: red;">画像は５枚必要です！！！</div>
     </div>
     <form action="post_old_check.php" method="POST" enctype="multipart/form-data">
         <label>商品画像1</label><br>

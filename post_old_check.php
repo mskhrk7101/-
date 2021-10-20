@@ -4,8 +4,37 @@ include("functions.php");
 check_session_id();
 $pdo = connect_to_db();
 
-// var_dump($_POST);
+// var_dump($_FILES);
 // exit();
+
+$brand_name = $_POST['brand_name'];
+$kinds = $_POST['kinds'];
+$item_id = $_POST['item_id'];
+$item_name = $_POST['item_name'];
+$size = $_POST['size'];
+$item_status = $_POST['item_status'];
+$item_color = $_POST['item_color'];
+$filename_to_save2 = $_FILES['item_image2']['name'];
+$filename_to_save3 = $_FILES['item_image3']['name'];
+$filename_to_save4 = $_FILES['item_image4']['name'];
+$filename_to_save5 = $_FILES['item_image5']['name'];
+$filename_to_save6 = $_FILES['item_image6']['name'];
+
+
+// var_dump($brand_name);
+// var_dump($kinds);
+// var_dump($item_id);
+// var_dump($item_name);
+// var_dump($size);
+// var_dump($item_status);
+// var_dump($item_color);
+var_dump($filename_to_save2);
+var_dump($filename_to_save3);
+var_dump($filename_to_save4);
+var_dump($filename_to_save5);
+var_dump($filename_to_save6);
+
+exit();
 if (
     !isset($_POST['size']) || $_POST['size'] == NULL ||
     !isset($_POST['item_color']) || $_POST['item_color'] == NULL ||
@@ -17,9 +46,9 @@ if (
 if (isset($_FILES['item_image2']) && $_FILES['item_image2']['error'] == 0) {
     $uploaded_file_name = $_FILES['item_image2']['name']; //ファイル名を取得
     $temp_path = $_FILES['item_image2']['tmp_name']; //tmpフォルダの場所
-    $directory_path = 'upload/'; //アップロード先ォルダ(自分で決める)
-    $extension = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
-    $unique_name = date('YmdHis') . md5(session_id()) . "." . $extension;
+    $directory_path = 'upload/'; //アップロード先フォルダ(自分で決める)
+    $extension1 = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
+    $unique_name = date('YmdHis') . md5(session_id()) . "." . $extension1;
     $filename_to_save2 = $directory_path . $unique_name;
     if (is_uploaded_file($temp_path)) {
 
@@ -35,15 +64,15 @@ if (isset($_FILES['item_image2']) && $_FILES['item_image2']['error'] == 0) {
     exit('error:画像が送信されていません');
 }
 if (isset($_FILES['item_image3']) && $_FILES['item_image3']['error'] == 0) {
-    $uploaded_file_name = $_FILES['item_image3']['name']; //ファイル名を取得
-    $temp_path = $_FILES['item_image3']['tmp_name']; //tmpフォルダの場所
-    $directory_path = 'upload/'; //アップロード先ォルダ(自分で決める)
-    $extension = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
+    $uploaded_file_name2 = $_FILES['item_image3']['name']; //ファイル名を取得
+    $temp_path2 = $_FILES['item_image3']['tmp_name']; //tmpフォルダの場所
+    $directory_path2 = 'upload/'; //アップロード先ォルダ(自分で決める)
+    $extension2 = pathinfo($uploaded_file_name2, PATHINFO_EXTENSION);
     $unique_name = date('YmdHis') . md5(session_id()) . "." . $extension;
-    $filename_to_save3 = $directory_path . $unique_name;
-    if (is_uploaded_file($temp_path)) {
+    $filename_to_save3 = $directory_path2 . $unique_name;
+    if (is_uploaded_file($temp_path2)) {
 
-        if (move_uploaded_file($temp_path, $filename_to_save3)) {
+        if (move_uploaded_file($temp_path2, $filename_to_save3)) {
             chmod($filename_to_save3, 0644);
         } else {
             exit('ERROR:アップロードできませんでした');
@@ -55,10 +84,10 @@ if (isset($_FILES['item_image3']) && $_FILES['item_image3']['error'] == 0) {
     exit('error:画像が送信されていません');
 }
 if (isset($_FILES['item_image4']) && $_FILES['item_image4']['error'] == 0) {
-    $uploaded_file_name = $_FILES['item_image4']['name']; //ファイル名を取得
+    $uploaded_file_name3 = $_FILES['item_image4']['name']; //ファイル名を取得
     $temp_path = $_FILES['item_image4']['tmp_name']; //tmpフォルダの場所
     $directory_path = 'upload/'; //アップロード先ォルダ(自分で決める)
-    $extension = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
+    $extension3 = pathinfo($uploaded_file_name3, PATHINFO_EXTENSION);
     $unique_name = date('YmdHis') . md5(session_id()) . "." . $extension;
     $filename_to_save4 = $directory_path . $unique_name;
     if (is_uploaded_file($temp_path)) {
@@ -75,10 +104,10 @@ if (isset($_FILES['item_image4']) && $_FILES['item_image4']['error'] == 0) {
     exit('error:画像が送信されていません');
 }
 if (isset($_FILES['item_image5']) && $_FILES['item_image5']['error'] == 0) {
-    $uploaded_file_name = $_FILES['item_image5']['name']; //ファイル名を取得
+    $uploaded_file_name4 = $_FILES['item_image5']['name']; //ファイル名を取得
     $temp_path = $_FILES['item_image5']['tmp_name']; //tmpフォルダの場所
     $directory_path = 'upload/'; //アップロード先ォルダ(自分で決める)
-    $extension = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
+    $extension4 = pathinfo($uploaded_file_name4, PATHINFO_EXTENSION);
     $unique_name = date('YmdHis') . md5(session_id()) . "." . $extension;
     $filename_to_save5 = $directory_path . $unique_name;
     if (is_uploaded_file($temp_path)) {
@@ -94,11 +123,12 @@ if (isset($_FILES['item_image5']) && $_FILES['item_image5']['error'] == 0) {
 } else {
     exit('error:画像が送信されていません');
 }
+
 if (isset($_FILES['item_image6']) && $_FILES['item_image6']['error'] == 0) {
-    $uploaded_file_name = $_FILES['item_image6']['name']; //ファイル名を取得
+    $uploaded_file_name5 = $_FILES['item_image6']['name']; //ファイル名を取得
     $temp_path = $_FILES['item_image6']['tmp_name']; //tmpフォルダの場所
     $directory_path = 'upload/'; //アップロード先ォルダ(自分で決める)
-    $extension = pathinfo($uploaded_file_name, PATHINFO_EXTENSION);
+    $extension5 = pathinfo($uploaded_file_name5, PATHINFO_EXTENSION);
     $unique_name = date('YmdHis') . md5(session_id()) . "." . $extension;
     $filename_to_save6 = $directory_path . $unique_name;
     if (is_uploaded_file($temp_path)) {
@@ -115,17 +145,6 @@ if (isset($_FILES['item_image6']) && $_FILES['item_image6']['error'] == 0) {
     exit('error:画像が送信されていません');
 }
 
-
-$brand_name = $_POST['brand_name'];
-$kinds = $_POST['kinds'];
-$item_id = $_POST['item_id'];
-$item_name = $_POST['item_name'];
-$size = $_POST['size'];
-$item_status = $_POST['item_status'];
-$user_id = $_SESSION['id'];
-$user_id = $_SESSION['user_id'];
-$owner_id = $_SESSION['id'];
-$item_color = $_POST['item_color'];
 try {
     $sql = 'UPDATE item_table SET  item_name = :item_name, item_image2=:item_image2, item_image3=:item_image3,item_image4=:item_image4,item_image5=:item_image5,item_image6=:item_image6,item_color=:item_color, size=:size,owner_id=:owner_id WHERE id = :id';
     $stmt = $pdo->prepare($sql);
@@ -163,7 +182,9 @@ if (
 ) {
     exit('選択されていません');
 }
-
+// var_dump($filename_to_save2);
+// var_dump($filename_to_save3);
+// exit();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -179,7 +200,7 @@ if (
 <body>
     <form action="post_status.php" method="POST" class="back">
         <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px"> <br>
-        出品TOPへ戻る
+
     </form>
     <div>
         <h1>出品確認</h1>
@@ -190,16 +211,21 @@ if (
             商品状態：<?= $item_status ?>
             ブランド名： <?= $brand_name ?><br>
             種類：<?= $kinds ?><br>
-            <img src="<?= $filename_to_save2 ?>" alt="" width="360px">
-            <img src="<?= $filename_to_save3 ?>" alt="" width="360px"> <br>
-            <img src="<?= $filename_to_save4 ?>" alt="" width="360px">
-            <img src="<?= $filename_to_save5 ?>" alt="" width="360px"> <br>
-            <img src="<?= $filename_to_save6 ?>" alt="" width="360px"> <br>
+            <img src=<?= $filename_to_save2 ?> alt="" width="360px">
+            <img src=<?= $filename_to_save3 ?> alt="" width="360px"> <br>
+            <img src=<?= $filename_to_save4 ?> alt="" width="360px">
+            <img src=<?= $filename_to_save5 ?> alt="" width="360px"> <br>
+            <img src=<?= $filename_to_save6 ?> dalt="" width="360px"> <br>
             商品名：<?= $item_name ?><br>
             サイズ：<?= $size ?><br>
         </fieldset>
         <input type="submit" value="出品" name="send">
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <div class="sub-top">
         <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 

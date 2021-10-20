@@ -7,6 +7,7 @@ $pdo = connect_to_db();
 // exit();
 $item_status = $_POST['item_status'];
 $brand_name = $_POST['brand_name'];
+$item_id = $_POST['item_id'];
 // var_dump($_POST);
 // exit();
 
@@ -55,13 +56,18 @@ if ($status == false) {
     // $item_output = $stmt->fetch(PDO::FETCH_ASSOC);
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $item_output .= '<form action="post_old_item.php" method="POST">';
+        $item_output .= "<h2>-{$result["brand_name"]}-</h2>";
+        $item_output .= "<div class='box'>";
         $item_output .= "<div>{$result["kinds"]}</div>";
+        $item_output .= "<div class='aa'>";
+        $item_output .= "<button type=submit class='btn'>選択</button>";
+        $item_output .= "</div>";
         $item_output .= "<input type='hidden' name='brand_name' value='{$result["brand_name"]}'>";
         $item_output .= "<input type='hidden' name='kinds' value='{$result["kinds"]}'>";
-        // $item_output .= " <input type='hidden' name='id' value='{$result[0]["id"]}'>";
+        $item_output .= "<input type='hidden' name='item_status' value='{$item_status}'>";
         $item_output .= " <input type='hidden' name='item_id' value='{$item_id}'>";
-        $item_output .= "<button type=submit>選択</button>";
         $item_output .= "</form>";
+        $item_output .= "</div>";
     }
 }
 ?>
@@ -72,12 +78,29 @@ if ($status == false) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新品</title>
+    <title>中古</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .box {
+            display: flex;
+        }
+
+        .btn {
+            background-color: white;
+            margin: 0 0 5px 20px;
+            width: 200px;
+        }
+
+        .aa {
+            width: 100%;
+
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="post_new_brand.php" method="POST" class="back">
+    <form action="post_status.php" method="POST" class="back">
         <input type="image" name="back" alt="back" src="img/iconmonstr-arrow-left-circle-thin.png" width="50px" height="50px">
     </form>
     <fieldset>
@@ -87,11 +110,7 @@ if ($status == false) {
     </fieldset>
     <label for="row">並び替え</label>
 
-    <select name="row" id="row">
-        <option value="new">新しい順</option>
-        <option value="old">古い順</option>
-        <option value="brand">ブランド順</option>
-    </select>
+
     <div>
         <h2>商品種類</h2>
     </div>
@@ -101,9 +120,9 @@ if ($status == false) {
 
 
     <div class="sub-top">
-        <a href="index.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
+        <a href="index2.php"><img alt="market" src="img/iconmonstr-shopping-cart-thin.png" width="50px" height="50px"> <br> マーケット</a> <br>
 
-        <a href="media.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
+        <a href="media2.php"><img alt="media" src="img/safari_logo_icon_144917.png" width="50px" height="50px"> <br> メディア</a> <br>
 
         <a href="post_status.php"><img alt="post_status" src="img/iconmonstr-plus-circle-thin.png" width="50px" height="50px"> <br> 出品</a> <br>
 
